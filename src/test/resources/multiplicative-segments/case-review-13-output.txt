@@ -1,0 +1,3 @@
+Minimum interval length: 51
+Found intervals:
+[3147, 3197]

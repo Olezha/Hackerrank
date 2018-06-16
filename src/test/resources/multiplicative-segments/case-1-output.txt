@@ -1,0 +1,7 @@
+Minimum interval length: 3
+Found intervals:
+[1, 3]
+[3, 5]
+[5, 7]
+[6, 8]
+[8, 10]

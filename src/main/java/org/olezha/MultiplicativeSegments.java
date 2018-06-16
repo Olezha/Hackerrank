@@ -1,11 +1,16 @@
 package org.olezha;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
- * You have an integer K and a list of  integers.
+ * You have an integer K and a list of N integers.
  * Your goal is to find all possible shortest intervals in the list,
  * such that the product of the integers in each interval, is a multiple of K.
+ *
+ * Constraints:
+ * 1 <= N <= 2 * 1e5
+ * 1 <= K <= 1e17
  *
  * Sample Input:
  * 6 5
@@ -26,22 +31,22 @@ public class MultiplicativeSegments {
     private static final String INTERVAL_IS_FOUND_PREFIX = "Minimum interval length: ";
     private static final String FOUND_INTERVALS_MESSAGE = "Found intervals:";
 
-    static List<String> findShortestIntervals(long k, long n, List<Long> nList) {
+    static List<String> findShortestIntervals(BigInteger k, long n, List<BigInteger> nList) {
         long interval = 1;
         List<String> possibleIntervals = new LinkedList<>();
         for (; interval < n - 1; interval++) {
             long position = 0;
 
-            ListIterator<Long> firstIterator = nList.listIterator();
-            ListIterator<Long> secondIterator = nList.listIterator();
+            ListIterator<BigInteger> firstIterator = nList.listIterator();
+            ListIterator<BigInteger> secondIterator = nList.listIterator();
             for (long i = 1; i < interval; i++)
                 secondIterator.next();
             for (; secondIterator.hasNext();) {
                 position++;
-                long firstINTEGER = firstIterator.next();
-                long secondINTEGER = secondIterator.next();
+                BigInteger firstINTEGER = firstIterator.next();
+                BigInteger secondINTEGER = secondIterator.next();
 
-                if (firstINTEGER * secondINTEGER % k == 0)
+                if (firstINTEGER.multiply(secondINTEGER).remainder(k).equals(BigInteger.ZERO))
                     possibleIntervals.add("[" + position + ", " + (position + interval - 1) + "]");
             }
 
@@ -62,11 +67,11 @@ public class MultiplicativeSegments {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        long k = scan.nextLong();
+        BigInteger k = BigInteger.valueOf(scan.nextLong());
         long n = scan.nextLong();
-        List<Long> nList = new LinkedList<>();
+        List<BigInteger> nList = new LinkedList<>();
         while (scan.hasNextLong())
-            nList.add(scan.nextLong());
+            nList.add(BigInteger.valueOf(scan.nextLong()));
         scan.close();
 
         for (String s : findShortestIntervals(k, n, nList))
