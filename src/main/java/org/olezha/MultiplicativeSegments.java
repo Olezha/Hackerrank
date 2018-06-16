@@ -32,20 +32,14 @@ public class MultiplicativeSegments {
         for (; interval < n - 1; interval++) {
             long position = 0;
 
-            findInInterval: for (ListIterator<Long> iterator = nList.listIterator(); iterator.hasNext(); ) {
+            ListIterator<Long> firstIterator = nList.listIterator();
+            ListIterator<Long> secondIterator = nList.listIterator();
+            for (long i = 1; i < interval; i++)
+                secondIterator.next();
+            for (; secondIterator.hasNext();) {
                 position++;
-                long firstINTEGER = iterator.next();
-                iterator.previous();
-                for (long i = 1; i < interval; i++) {
-                    if (iterator.hasNext())
-                        iterator.next();
-                    else break findInInterval;
-                    if (!iterator.hasNext())
-                        break findInInterval;
-                }
-                long secondINTEGER = iterator.next();
-                for (long i = 1; i < interval; i++)
-                    iterator.previous();
+                long firstINTEGER = firstIterator.next();
+                long secondINTEGER = secondIterator.next();
 
                 if (firstINTEGER * secondINTEGER % k == 0)
                     possibleIntervals.add("[" + position + ", " + (position + interval - 1) + "]");
@@ -61,7 +55,6 @@ public class MultiplicativeSegments {
         else {
             response.add(INTERVAL_IS_FOUND_PREFIX + interval);
             response.add(FOUND_INTERVALS_MESSAGE);
-            Collections.sort(possibleIntervals);
             response.addAll(possibleIntervals);
         }
         return response;
