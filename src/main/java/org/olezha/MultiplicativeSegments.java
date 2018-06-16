@@ -7,21 +7,22 @@ import java.util.*;
  * You have an integer K and a list of N integers.
  * Your goal is to find all possible shortest intervals in the list,
  * such that the product of the integers in each interval, is a multiple of K.
+ *   N[i] * N[j] % K == 0
  *
  * Constraints:
- * 1 <= N <= 2 * 1e5
- * 1 <= K <= 1e17
+ *   1 <= N <= 2 * 1e5
+ *   1 <= K <= 1e17
  *
  * Sample Input:
- * 6 5
- * 2 9 4 3 16
+ *   6 5
+ *   2 9 4 3 16
  * Sample Output:
- * Minimum interval length: 2
- * Found intervals:
- * [1, 2]
- * [2, 3]
- * [3, 4]
- * [4, 5]
+ *   Minimum interval length: 2
+ *   Found intervals:
+ *   [1, 2]
+ *   [2, 3]
+ *   [3, 4]
+ *   [4, 5]
  *
  * https://www.hackerrank.com/contests/codeagon2015/challenges/mulseg
  */
@@ -43,10 +44,11 @@ public class MultiplicativeSegments {
                 secondIterator.next();
             for (; secondIterator.hasNext();) {
                 position++;
-                BigInteger firstINTEGER = firstIterator.next();
-                BigInteger secondINTEGER = secondIterator.next();
+                BigInteger first = firstIterator.next();
+                BigInteger second = secondIterator.next();
 
-                if (firstINTEGER.multiply(secondINTEGER).remainder(k).equals(BigInteger.ZERO))
+                // TODO: too slow check
+                if (first.multiply(second).remainder(k).equals(BigInteger.ZERO))
                     possibleIntervals.add("[" + position + ", " + (position + interval - 1) + "]");
             }
 

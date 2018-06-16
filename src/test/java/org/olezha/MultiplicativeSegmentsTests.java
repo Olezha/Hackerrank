@@ -33,47 +33,51 @@ public class MultiplicativeSegmentsTests {
 
     @Test
     public void caseReview2() {
-        testCase(2, true);
+        testCase(2);
     }
 
     @Test
     public void caseReview8() {
-        testCase(8, true);
+        testCase(8);
     }
 
     @Test
     public void caseReview10() {
-        testCase(10, true);
+        testCase(10);
     }
 
     @Test
     public void caseReview11() {
-        testCase(11, true);
+        testCase(11);
     }
 
     @Test
     public void caseReview12() {
-        testCase(12, true);
+        testCase(12);
     }
 
     @Test
     public void caseReview13() {
-        testCase(13, true);
+        testCase(13);
     }
 
     @Test
     public void caseReview14() {
-        testCase(14, true);
+        testCase(14);
     }
 
     @Test
     public void caseReview15() {
-        testCase(15, true);
+        testCase(15);
     }
 
     @Test
     public void caseReview17() {
-        testCase(17, true);
+        testCase(17);
+    }
+
+    private void testCase(int number) {
+        testCase(number, true);
     }
 
     private void testCase(int number, boolean isFromReview) {
