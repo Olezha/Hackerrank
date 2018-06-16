@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -100,10 +99,10 @@ public class MultiplicativeSegmentsTests {
                 .getFile());
         Input input = new Input();
         Scanner scan = new Scanner(file);
-        input.k = BigInteger.valueOf(scan.nextLong());
+        input.k = scan.nextLong();
         input.n = scan.nextLong();
         while (scan.hasNextLong())
-            input.nList.add(BigInteger.valueOf(scan.nextLong()));
+            input.nList.add(scan.nextLong());
         scan.close();
         return input;
     }
@@ -122,8 +121,8 @@ public class MultiplicativeSegmentsTests {
     }
 
     private class Input {
-        BigInteger k;
+        long k;
         long n;
-        List<BigInteger> nList = new LinkedList<>();
+        List<Long> nList = new LinkedList<>();
     }
 }
