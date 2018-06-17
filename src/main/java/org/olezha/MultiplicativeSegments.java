@@ -47,10 +47,7 @@ public class MultiplicativeSegments {
                 Long first = firstIterator.next();
                 Long second = secondIterator.next();
 
-                // TODO: too slow check
-//                if (first.multiply(second).remainder(k).equals(BigInteger.ZERO))
-//                if (((first % k) * (second % k)) % k == 0)
-                if (BigInteger.valueOf(first).multiply(BigInteger.valueOf(second)).remainder(BigInteger.valueOf(k)).equals(BigInteger.ZERO))
+                if (isMultiple(first, second, k))
                     possibleIntervals.add("[" + position + ", " + (position + interval - 1) + "]");
             }
 
@@ -67,6 +64,17 @@ public class MultiplicativeSegments {
             response.addAll(possibleIntervals);
         }
         return response;
+    }
+
+    /**
+     * @return n1 * n2 % k == 0
+     */
+    private static boolean isMultiple(long n1, long n2, long k) {
+        // TODO: too slow check
+        return BigInteger.valueOf(n1)
+                .multiply(BigInteger.valueOf(n2))
+                .remainder(BigInteger.valueOf(k))
+                .equals(BigInteger.ZERO);
     }
 
     public static void main(String[] args) {
