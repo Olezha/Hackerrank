@@ -47,8 +47,10 @@ public class MultiplicativeSegments {
                 Long first = firstIterator.next();
                 Long second = secondIterator.next();
 
-                if (isMultiple(first, second, k))
+                if (isMultiple(first, second, k)) {
                     possibleIntervals.add("[" + position + ", " + (position + interval - 1) + "]");
+                    System.out.println(first + " " + second + " " + k);
+                }
             }
 
             if (!possibleIntervals.isEmpty())
