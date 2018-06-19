@@ -1,5 +1,9 @@
 package org.olezha;
 
+/**
+ * Greatest common divisor
+ * Наибольший общий делитель
+ */
 public class GCD {
 
     public static void main(String[] args) {
@@ -11,6 +15,15 @@ public class GCD {
     }
 
     public static long gcd(long a, long b) {
+        while (b > 0) {
+            long temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    public static long gcd2(long a, long b) {
         if (a == b)
             return a;
         if (a == 0)
