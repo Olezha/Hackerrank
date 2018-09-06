@@ -26,8 +26,11 @@ public class FavoriteSequence {
             nM[i] = m;
         }
 
+        int[] lessSequence = lessSequence(nM);
+        if (lessSequence == null) throw new RuntimeException();
+
         System.out.println(
-                IntStream.of(lessSequence(nM))
+                IntStream.of(lessSequence)
                         .mapToObj(Integer::toString)
                         .collect(Collectors.joining(" ")));
     }
