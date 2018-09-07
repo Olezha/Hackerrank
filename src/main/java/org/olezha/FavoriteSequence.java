@@ -5,7 +5,7 @@ import java.util.stream.*;
 
 public class FavoriteSequence {
 
-    /**
+    /*
      * https://www.hackerrank.com/challenges/favourite-sequence
      * http://chasethered.com/2014/11/my-problem-for-hackerrank-weekly-challenge-12-favorite-sequence/
      */
@@ -72,9 +72,9 @@ class NodesSet {
 
     private Map<Node, Node> map = new HashMap<>();
 
-    Node getOrPut(int i) {
+    Node getOrPut(int v) {
         Node node = new Node() {{
-            x = i;
+            x = v;
         }};
 
         Node existingNode = map.putIfAbsent(node, node);
