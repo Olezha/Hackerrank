@@ -41,7 +41,7 @@ public class FavoriteSequence {
             for (int x : brokenM) {
                 Node node = occurrences.getOrPut(x);
                 if (previousNode != null)
-                    previousNode.nextNode = node;
+                    previousNode.nextNode = node; // todo: if previous node already has next node
                 previousNode = node;
             }
         }
@@ -66,7 +66,7 @@ class Node {
 
     @Override
     public int hashCode() {
-        return x % 10;
+        return x;
     }
 }
 
@@ -79,7 +79,8 @@ class NodesSet {
             x = i;
         }};
 
-        map.putIfAbsent(node, node);
+        Node previousNode = map.putIfAbsent(node, node);
+        if (previousNode != null) node = previousNode;
 
         return node;
     }
@@ -96,5 +97,12 @@ class Main2 {
         log.info("should 1 2 3 4: {}", FavoriteSequence.lessSequence(new int[][]{
                 {1, 3},
                 {2, 3, 4}}));
+        log.info("should 1 2 3 4: {}", FavoriteSequence.lessSequence(new int[][]{
+                {2, 3, 4},
+                {1, 3}}));
+        log.info("should 7 1 2 3 4: {}", FavoriteSequence.lessSequence(new int[][]{
+                {2, 3, 4},
+                {1, 3},
+                {7, 1, 3}}));
     }
 }
