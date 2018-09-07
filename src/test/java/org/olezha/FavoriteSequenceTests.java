@@ -45,4 +45,11 @@ public class FavoriteSequenceTests {
                 {68, 7, 18},
                 {67, 46, 11, 99, 48, 69, 57, 19, 45, 95}}));
     }
+
+    @Test
+    public void case2() {
+        assertArrayEquals(new int[]{29, 3, 88, 35, 9, 39, 8, 27, 12, 65}, FavoriteSequence.lessSequence(new int[][]{
+                {35, 9},
+                {29, 3, 88, 35, 39, 8, 27, 12, 65}}));
+    }
 }

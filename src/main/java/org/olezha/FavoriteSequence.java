@@ -43,7 +43,7 @@ public class FavoriteSequence {
                 previousNode = node;
             }
         }
-        return occurrences.toOrderedSequenceArray();
+        return occurrences.calcToArray();
     }
 }
 
@@ -83,11 +83,11 @@ class NodesSet {
         return node;
     }
 
-    int[] toOrderedSequenceArray() {
-        return orderedSequence().stream().mapToInt(node -> node.x).toArray();
+    int[] calcToArray() {
+        return calc().stream().mapToInt(node -> node.x).toArray();
     }
 
-    private List<Node> orderedSequence() {
+    private List<Node> calc() {
         Set<Node> lasts = lasts();
         List<List<Node>> individualSequences = new ArrayList<>(lasts.size());
         int maxIndividualSequenceSize = 0;
@@ -125,7 +125,7 @@ class NodesSet {
 
     private void addNodeToOrderedSequence(Node node, List<Node> orderedSequence) {
         orderedSequence.add(node);
-        for (Node previousNode : lexicographicallySort(previous(node)))
+        for (Node previousNode : lexicographicallySort(previous(node))) // bug closely
             addNodeToOrderedSequence(previousNode, orderedSequence);
     }
 
