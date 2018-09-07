@@ -1,7 +1,5 @@
 package org.olezha;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -41,18 +39,18 @@ public class FavoriteSequence {
             for (int x : brokenM) {
                 Node node = occurrences.getOrPut(x);
                 if (previousNode != null)
-                    previousNode.nextNode = node; // todo: if previous node already has next node
+                    previousNode.nextNodes.add(node);
                 previousNode = node;
             }
         }
-        return occurrences.toArray();
+        return occurrences.toOrderedSequenceArray();
     }
 }
 
 class Node {
 
     int x;
-    Node nextNode;
+    Set<Node> nextNodes = new HashSet<>();
 
     @Override
     public boolean equals(Object obj) {
@@ -79,30 +77,80 @@ class NodesSet {
             x = i;
         }};
 
-        Node previousNode = map.putIfAbsent(node, node);
-        if (previousNode != null) node = previousNode;
+        Node existingNode = map.putIfAbsent(node, node);
+        if (existingNode != null) node = existingNode;
 
         return node;
     }
 
-    int[] toArray() {
-        return map.values().stream().mapToInt(node -> node.x).toArray();
+    int[] toOrderedSequenceArray() {
+        return orderedSequence().stream().mapToInt(node -> node.x).toArray();
     }
-}
 
-@Slf4j
-class Main2 {
+    private List<Node> orderedSequence() {
+        Set<Node> lasts = lasts();
+        List<List<Node>> individualSequences = new ArrayList<>(lasts.size());
+        int maxIndividualSequenceSize = 0;
+        for (Node node : lasts) {
+            List<Node> orderedSequence = new ArrayList<>();
+            addNodeToOrderedSequence(node, orderedSequence);
+            Collections.reverse(orderedSequence);
+            individualSequences.add(orderedSequence);
+            int orderedSequenceSize = orderedSequence.size();
+            if (orderedSequenceSize > maxIndividualSequenceSize)
+                maxIndividualSequenceSize = orderedSequenceSize;
+        }
 
-    public static void main(String[] args) {
-        log.info("should 1 2 3 4: {}", FavoriteSequence.lessSequence(new int[][]{
-                {1, 3},
-                {2, 3, 4}}));
-        log.info("should 1 2 3 4: {}", FavoriteSequence.lessSequence(new int[][]{
-                {2, 3, 4},
-                {1, 3}}));
-        log.info("should 7 1 2 3 4: {}", FavoriteSequence.lessSequence(new int[][]{
-                {2, 3, 4},
-                {1, 3},
-                {7, 1, 3}}));
+        List<Node> orderedSequence = new ArrayList<>(map.size());
+        while (individualSequences.size() > 0) {
+            Node nextNode = null;
+            for (List<Node> individualSequence : individualSequences) {
+                if (nextNode == null)
+                    nextNode = individualSequence.get(0);
+                else if (lexicographicallyCompare(nextNode, individualSequence.get(0)) < 0)
+                    nextNode = individualSequence.get(0);
+            }
+            for (List<Node> individualSequence : individualSequences) {
+                if (individualSequence.remove(nextNode)) {
+                    if (individualSequence.size() == 0)
+                        individualSequences.remove(individualSequence);
+                    break;
+                }
+            }
+            orderedSequence.add(nextNode);
+        }
+
+        return orderedSequence;
+    }
+
+    private void addNodeToOrderedSequence(Node node, List<Node> orderedSequence) {
+        orderedSequence.add(node);
+        for (Node previousNode : lexicographicallySort(previous(node)))
+            addNodeToOrderedSequence(previousNode, orderedSequence);
+    }
+
+    private Set<Node> previous(Node node) {
+        return map.values().stream()
+                .filter(nod3 -> {
+                    if (!nod3.nextNodes.contains(node))
+                        return false;
+                    nod3.nextNodes.remove(node);
+                    return nod3.nextNodes.isEmpty();
+                })
+                .collect(Collectors.toSet());
+    }
+
+    private Set<Node> lasts() {
+        return map.values().stream().filter(node -> node.nextNodes.isEmpty()).collect(Collectors.toSet());
+    }
+
+    private List<Node> lexicographicallySort(Set<Node> nodes) {
+        return nodes.stream()
+                .sorted(this::lexicographicallyCompare)
+                .collect(Collectors.toList());
+    }
+
+    private int lexicographicallyCompare(Node node1, Node node2) {
+        return Integer.toString(node2.x).compareTo(Integer.toString(node1.x));
     }
 }
