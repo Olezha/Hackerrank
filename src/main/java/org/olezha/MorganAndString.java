@@ -1,21 +1,9 @@
 package org.olezha;
 
-public class MorganAndString {
-
-    public static void main(String[] args) {
-        String answer = morganAndString("JACK", "DANIEL");
-        System.out.println("DAJACKNIEL = " + answer + " " + "DAJACKNIEL".equals(answer));
-        answer = morganAndString("SAME", "SAME");
-        System.out.println("SAMESAME = " + answer + " " + "SAMESAME".equals(answer));
-        answer = morganAndString("ASEM", "ASEM");
-        System.out.println("AASEMSEM = " + answer + " " + "AASEMSEM".equals(answer));
-        answer = morganAndString("YZYYZYZYY", "ZYYZYZYY");
-        System.out.println("YZYYZYYZYZYYZYZYY = " + answer + " " + "YZYYZYYZYZYYZYZYY".equals(answer));
-        answer = morganAndString("ZZYYZZZA", "ZZYYZZZB");
-        System.out.println("ZZYYZZYYZZZAZZZB = " + answer + " " + "ZZYYZZYYZZZAZZZB".equals(answer));
-        answer = morganAndString("AECCCBAF", "BECCCBAD");
-        System.out.println("ABECCCBADECCCBAF = " + answer + " " + "ABECCCBADECCCBAF".equals(answer));
-    }
+/*
+ * https://www.hackerrank.com/challenges/morgan-and-a-string
+ */
+class MorganAndString {
 
     static String morganAndString(String a, String b) {
         char[] aLetters = a.toCharArray();
@@ -54,15 +42,15 @@ public class MorganAndString {
                     if (aLetters[innerALettersPointer] < bLetters[innerBLettersPointer]) {
                         char letter = aLetters[aLettersPointer++];
                         lexicographicallyMinStrFromTwoCollections.append(letter);
-                        while (aLetters.length > aLettersPointer
-                                && letter >= aLetters[aLettersPointer] && letter != 'Z')
+                        while (innerALettersPointer > aLettersPointer
+                                && letter >= aLetters[aLettersPointer])
                             lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
                     }
                     else {
                         char letter = bLetters[bLettersPointer++];
                         lexicographicallyMinStrFromTwoCollections.append(letter);
-                        while (bLetters.length > bLettersPointer
-                                && letter >= bLetters[bLettersPointer] && letter != 'Z')
+                        while (innerBLettersPointer > bLettersPointer
+                                && letter >= bLetters[bLettersPointer])
                             lexicographicallyMinStrFromTwoCollections.append(bLetters[bLettersPointer++]);
                     }
 
