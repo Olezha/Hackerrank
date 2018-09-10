@@ -13,6 +13,7 @@ public class MorganAndStringTests {
     private static Properties testcase2;
     private static Properties testcase5;
     private static Properties testcase7;
+    private static Properties testcase10;
 
     @BeforeClass
     public static void initialize() throws IOException {
@@ -25,6 +26,9 @@ public class MorganAndStringTests {
         testcase7 = new Properties();
         testcase7.load(MorganAndStringTests.class.getClassLoader()
                 .getResourceAsStream("morgan-and-string/case-7.properties"));
+        testcase10 = new Properties();
+        testcase10.load(MorganAndStringTests.class.getClassLoader()
+                .getResourceAsStream("morgan-and-string/case-10.properties"));
     }
 
     @Test
@@ -145,5 +149,45 @@ public class MorganAndStringTests {
                 MorganAndString.morganAndString(
                         testcase7.getProperty("a5"),
                         testcase7.getProperty("b5")));
+    }
+
+    @Test
+    public void case10p1() {
+        assertEquals(testcase10.getProperty("answer1"),
+                MorganAndString.morganAndString(
+                        testcase10.getProperty("a1"),
+                        testcase10.getProperty("b1")));
+    }
+
+    @Test
+    public void case10p2() {
+        assertEquals(testcase10.getProperty("answer2"),
+                MorganAndString.morganAndString(
+                        testcase10.getProperty("a2"),
+                        testcase10.getProperty("b2")));
+    }
+
+    @Test
+    public void case10p3() {
+        assertEquals(testcase10.getProperty("answer3"),
+                MorganAndString.morganAndString(
+                        testcase10.getProperty("a3"),
+                        testcase10.getProperty("b3")));
+    }
+
+    @Test
+    public void case10p4() {
+        assertEquals(testcase10.getProperty("answer4"),
+                MorganAndString.morganAndString(
+                        testcase10.getProperty("a4"),
+                        testcase10.getProperty("b4")));
+    }
+
+    @Test
+    public void case10p5() {
+        assertEquals(testcase10.getProperty("answer5"),
+                MorganAndString.morganAndString(
+                        testcase10.getProperty("a5"),
+                        testcase10.getProperty("b5")));
     }
 }

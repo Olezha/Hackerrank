@@ -16,11 +16,11 @@ class MorganAndString {
         while (aLetters.length > aLettersPointer || bLetters.length > bLettersPointer)
             if (aLetters.length == aLettersPointer) {
                 lexicographicallyMinStrFromTwoCollections.append(b.substring(bLettersPointer));
-                bLettersPointer = bLetters.length;
+                break;
             }
             else if (bLetters.length == bLettersPointer) {
                 lexicographicallyMinStrFromTwoCollections.append(a.substring(aLettersPointer));
-                aLettersPointer = aLetters.length;
+                break;
             }
 
             else if (aLetters[aLettersPointer] < bLetters[bLettersPointer])
@@ -67,10 +67,12 @@ class MorganAndString {
 
                 char letter = aLetters[aLettersPointer++];
                 lexicographicallyMinStrFromTwoCollections.append(letter);
+                // todo: something. Should can be removed
                 while (aLetters.length > aLettersPointer
                         && letter >= aLetters[aLettersPointer])
                     lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
             }
+
         return lexicographicallyMinStrFromTwoCollections.toString();
     }
 }
