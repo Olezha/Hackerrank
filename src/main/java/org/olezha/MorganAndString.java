@@ -28,8 +28,16 @@ class MorganAndString {
             else if (aLetters[aLettersPointer] > bLetters[bLettersPointer])
                 lexicographicallyMinStrFromTwoCollections.append(bLetters[bLettersPointer++]);
 
-            else {
-                // aLetters[aLettersPointer] == bLetters[bLettersPointer]
+            else /* aLetters[aLettersPointer] == bLetters[bLettersPointer] */ {
+                if (aLetters.length == aLettersPointer + 1) {
+                    lexicographicallyMinStrFromTwoCollections.append(bLetters[bLettersPointer++]);
+                    continue;
+                }
+                if (bLetters.length == bLettersPointer + 1) {
+                    lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
+                    continue;
+                }
+
                 int innerALettersPointer = aLettersPointer + 1;
                 int innerBLettersPointer = bLettersPointer + 1;
                 while (aLetters.length > innerALettersPointer || bLetters.length > innerBLettersPointer) {
@@ -57,7 +65,11 @@ class MorganAndString {
                     continue lettersOneByOne;
                 }
 
-                lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
+                char letter = aLetters[aLettersPointer++];
+                lexicographicallyMinStrFromTwoCollections.append(letter);
+                while (aLetters.length > aLettersPointer
+                        && letter >= aLetters[aLettersPointer])
+                    lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
             }
         return lexicographicallyMinStrFromTwoCollections.toString();
     }

@@ -12,6 +12,7 @@ public class MorganAndStringTests {
 
     private static Properties testcase2;
     private static Properties testcase5;
+    private static Properties testcase7;
 
     @BeforeClass
     public static void initialize() throws IOException {
@@ -21,6 +22,9 @@ public class MorganAndStringTests {
         testcase5 = new Properties();
         testcase5.load(MorganAndStringTests.class.getClassLoader()
                 .getResourceAsStream("morgan-and-string/case-5.properties"));
+        testcase7 = new Properties();
+        testcase7.load(MorganAndStringTests.class.getClassLoader()
+                .getResourceAsStream("morgan-and-string/case-7.properties"));
     }
 
     @Test
@@ -101,5 +105,45 @@ public class MorganAndStringTests {
                 MorganAndString.morganAndString(
                         testcase5.getProperty("a5"),
                         testcase5.getProperty("b5")));
+    }
+
+    @Test
+    public void case7p1() {
+        assertEquals(testcase7.getProperty("answer1"),
+                MorganAndString.morganAndString(
+                        testcase7.getProperty("a1"),
+                        testcase7.getProperty("b1")));
+    }
+
+    @Test
+    public void case7p2() {
+        assertEquals(testcase7.getProperty("answer2"),
+                MorganAndString.morganAndString(
+                        testcase7.getProperty("a2"),
+                        testcase7.getProperty("b2")));
+    }
+
+    @Test
+    public void case7p3() {
+        assertEquals(testcase7.getProperty("answer3"),
+                MorganAndString.morganAndString(
+                        testcase7.getProperty("a3"),
+                        testcase7.getProperty("b3")));
+    }
+
+    @Test
+    public void case7p4() {
+        assertEquals(testcase7.getProperty("answer4"),
+                MorganAndString.morganAndString(
+                        testcase7.getProperty("a4"),
+                        testcase7.getProperty("b4")));
+    }
+
+    @Test
+    public void case7p5() {
+        assertEquals(testcase7.getProperty("answer5"),
+                MorganAndString.morganAndString(
+                        testcase7.getProperty("a5"),
+                        testcase7.getProperty("b5")));
     }
 }
