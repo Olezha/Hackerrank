@@ -3,50 +3,74 @@ package org.olezha;
 public class MorganAndString {
 
     public static void main(String[] args) {
-        System.out.println("DAJACKNIEL = " + morganAndString("JACK", "DANIEL"));
-        System.out.println("SAMESAME = " + morganAndString("SAME", "SAME"));
-        System.out.println("AASEMSEM = " + morganAndString("ASEM", "ASEM"));
+        String answer = morganAndString("JACK", "DANIEL");
+        System.out.println("DAJACKNIEL = " + answer + " " + "DAJACKNIEL".equals(answer));
+        answer = morganAndString("SAME", "SAME");
+        System.out.println("SAMESAME = " + answer + " " + "SAMESAME".equals(answer));
+        answer = morganAndString("ASEM", "ASEM");
+        System.out.println("AASEMSEM = " + answer + " " + "AASEMSEM".equals(answer));
+        answer = morganAndString("YZYYZYZYY", "ZYYZYZYY");
+        System.out.println("YZYYZYYZYZYYZYZYY = " + answer + " " + "YZYYZYYZYZYYZYZYY".equals(answer));
+        answer = morganAndString("ZZYYZZZA", "ZZYYZZZB");
+        System.out.println("ZZYYZZYYZZZAZZZB = " + answer + " " + "ZZYYZZYYZZZAZZZB".equals(answer));
+        answer = morganAndString("AECCCBAF", "BECCCBAD");
+        System.out.println("ABECCCBADECCCBAF = " + answer + " " + "ABECCCBADECCCBAF".equals(answer));
     }
 
-    private static String morganAndString(String a, String b) {
-        char[] jacksLetters = a.toCharArray();
-        char[] danielsLetters = b.toCharArray();
-        StringBuilder lexicographicallyMinimalStringMadeOfThoseTwoCollections = new StringBuilder();
-        int jacksLettersPointer = 0;
-        int danielsLettersPointer = 0;
-        lettersOneByOne: while (jacksLetters.length > jacksLettersPointer || danielsLetters.length > danielsLettersPointer)
-            if (jacksLetters.length == jacksLettersPointer) {
-                lexicographicallyMinimalStringMadeOfThoseTwoCollections.append(b.substring(danielsLettersPointer));
-                danielsLettersPointer = danielsLetters.length;
+    static String morganAndString(String a, String b) {
+        char[] aLetters = a.toCharArray();
+        char[] bLetters = b.toCharArray();
+        StringBuilder lexicographicallyMinStrFromTwoCollections =
+                new StringBuilder(aLetters.length + bLetters.length);
+        int aLettersPointer = 0;
+        int bLettersPointer = 0;
+        lettersOneByOne:
+        while (aLetters.length > aLettersPointer || bLetters.length > bLettersPointer)
+            if (aLetters.length == aLettersPointer) {
+                lexicographicallyMinStrFromTwoCollections.append(b.substring(bLettersPointer));
+                bLettersPointer = bLetters.length;
             }
-            else if (danielsLetters.length == danielsLettersPointer) {
-                lexicographicallyMinimalStringMadeOfThoseTwoCollections.append(a.substring(jacksLettersPointer));
-                jacksLettersPointer = jacksLetters.length;
+            else if (bLetters.length == bLettersPointer) {
+                lexicographicallyMinStrFromTwoCollections.append(a.substring(aLettersPointer));
+                aLettersPointer = aLetters.length;
             }
-            else if (jacksLetters[jacksLettersPointer] < danielsLetters[danielsLettersPointer])
-                lexicographicallyMinimalStringMadeOfThoseTwoCollections.append(jacksLetters[jacksLettersPointer++]);
-            else if (jacksLetters[jacksLettersPointer] > danielsLetters[danielsLettersPointer])
-                lexicographicallyMinimalStringMadeOfThoseTwoCollections.append(danielsLetters[danielsLettersPointer++]);
+
+            else if (aLetters[aLettersPointer] < bLetters[bLettersPointer])
+                lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
+            else if (aLetters[aLettersPointer] > bLetters[bLettersPointer])
+                lexicographicallyMinStrFromTwoCollections.append(bLetters[bLettersPointer++]);
+
             else {
-                // jacksLetters[jacksLettersPointer] == danielsLetters[danielsLettersPointer]
-                int innerJacksLettersPointer = jacksLettersPointer + 1;
-                int innerDanielsLettersPointer = danielsLettersPointer + 1;
-                while (jacksLetters.length > innerJacksLettersPointer || danielsLetters.length > innerDanielsLettersPointer) {
-                    if (jacksLetters[innerJacksLettersPointer] == danielsLetters[innerDanielsLettersPointer]) {
-                        innerJacksLettersPointer++;
-                        innerDanielsLettersPointer++;
+                // aLetters[aLettersPointer] == bLetters[bLettersPointer]
+                int innerALettersPointer = aLettersPointer + 1;
+                int innerBLettersPointer = bLettersPointer + 1;
+                while (aLetters.length > innerALettersPointer || bLetters.length > innerBLettersPointer) {
+                    if (aLetters[innerALettersPointer] == bLetters[innerBLettersPointer]) {
+                        innerALettersPointer++;
+                        innerBLettersPointer++;
                         continue;
                     }
 
-                    if (jacksLetters[innerJacksLettersPointer] < danielsLetters[innerDanielsLettersPointer])
-                        lexicographicallyMinimalStringMadeOfThoseTwoCollections.append(jacksLetters[jacksLettersPointer++]);
-                    else if (jacksLetters[innerJacksLettersPointer] > danielsLetters[innerDanielsLettersPointer])
-                        lexicographicallyMinimalStringMadeOfThoseTwoCollections.append(danielsLetters[danielsLettersPointer++]);
+                    if (aLetters[innerALettersPointer] < bLetters[innerBLettersPointer]) {
+                        char letter = aLetters[aLettersPointer++];
+                        lexicographicallyMinStrFromTwoCollections.append(letter);
+                        while (aLetters.length > aLettersPointer
+                                && letter >= aLetters[aLettersPointer] && letter != 'Z')
+                            lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
+                    }
+                    else {
+                        char letter = bLetters[bLettersPointer++];
+                        lexicographicallyMinStrFromTwoCollections.append(letter);
+                        while (bLetters.length > bLettersPointer
+                                && letter >= bLetters[bLettersPointer] && letter != 'Z')
+                            lexicographicallyMinStrFromTwoCollections.append(bLetters[bLettersPointer++]);
+                    }
 
                     continue lettersOneByOne;
                 }
-                lexicographicallyMinimalStringMadeOfThoseTwoCollections.append(jacksLetters[jacksLettersPointer++]);
+
+                lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
             }
-        return lexicographicallyMinimalStringMadeOfThoseTwoCollections.toString();
+        return lexicographicallyMinStrFromTwoCollections.toString();
     }
 }
