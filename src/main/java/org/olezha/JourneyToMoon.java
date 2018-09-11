@@ -27,7 +27,7 @@ public class JourneyToMoon {
 
             Pair pair3 = new Pair();
             pair3.first = astronaut[i][1];
-            pair3.second = astronaut[i + 1][1];
+            pair3.second = astronaut[i + 1][0];
             pairs.add(pair3);
 
             Pair pair4 = new Pair();
@@ -55,6 +55,7 @@ class Pair {
 
         Pair pair = (Pair) obj;
 
-        return first == pair.first && second == pair.second;
+        return (first == pair.first && second == pair.second)
+                || (second == pair.first && first == pair.second);
     }
 }
