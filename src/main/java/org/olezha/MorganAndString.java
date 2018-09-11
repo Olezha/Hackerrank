@@ -6,8 +6,11 @@ package org.olezha;
 class MorganAndString {
 
     static String morganAndString(String a, String b) {
+
+        // char arr around 40% faster then working with Str
         char[] aLetters = a.toCharArray();
         char[] bLetters = b.toCharArray();
+
         StringBuilder lexicographicallyMinStrFromTwoCollections =
                 new StringBuilder(aLetters.length + bLetters.length);
         int aLettersPointer = 0;
@@ -41,6 +44,16 @@ class MorganAndString {
                 int innerALettersPointer = aLettersPointer + 1;
                 int innerBLettersPointer = bLettersPointer + 1;
                 while (aLetters.length > innerALettersPointer || bLetters.length > innerBLettersPointer) {
+                    if (aLetters.length == innerALettersPointer) {
+                        lexicographicallyMinStrFromTwoCollections.append(bLetters[innerBLettersPointer]);
+                        continue;
+                    }
+
+                    if (bLetters.length == innerBLettersPointer) {
+                        lexicographicallyMinStrFromTwoCollections.append(aLetters[innerALettersPointer]);
+                        continue;
+                    }
+
                     if (aLetters[innerALettersPointer] == bLetters[innerBLettersPointer]) {
                         innerALettersPointer++;
                         innerBLettersPointer++;
@@ -51,26 +64,25 @@ class MorganAndString {
                         char letter = aLetters[aLettersPointer++];
                         lexicographicallyMinStrFromTwoCollections.append(letter);
                         while (innerALettersPointer > aLettersPointer
-                                && letter >= aLetters[aLettersPointer])
+                                && letter >= aLetters[innerALettersPointer])
                             lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
                     }
                     else {
                         char letter = bLetters[bLettersPointer++];
                         lexicographicallyMinStrFromTwoCollections.append(letter);
                         while (innerBLettersPointer > bLettersPointer
-                                && letter >= bLetters[bLettersPointer])
+                                && letter >= bLetters[innerBLettersPointer])
                             lexicographicallyMinStrFromTwoCollections.append(bLetters[bLettersPointer++]);
                     }
 
                     continue lettersOneByOne;
                 }
 
-                char letter = aLetters[aLettersPointer++];
-                lexicographicallyMinStrFromTwoCollections.append(letter);
-                // todo: something. Should can be removed
-                while (aLetters.length > aLettersPointer
-                        && letter >= aLetters[aLettersPointer])
+//                lexicographicallyMinStrFromTwoCollections.append(a.substring(aLettersPointer)); // OutOfMemoryError: Java heap space
+                while (aLettersPointer < aLetters.length)
                     lexicographicallyMinStrFromTwoCollections.append(aLetters[aLettersPointer++]);
+                while (bLettersPointer < bLetters.length)
+                    lexicographicallyMinStrFromTwoCollections.append(bLetters[bLettersPointer++]);
             }
 
         return lexicographicallyMinStrFromTwoCollections.toString();
