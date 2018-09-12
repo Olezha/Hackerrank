@@ -1,6 +1,8 @@
 package org.olezha;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /*
@@ -9,43 +11,66 @@ import java.util.Set;
 public class JourneyToMoon {
 
     public static void main(String[] args) {
-        System.out.println(journeyToMoon(-1, new int[][]{{0, 1}, {2, 3}, {0, 4}}));
+        System.out.println(journeyToMoon(5, new int[][]{{0, 1}, {2, 3}, {0, 4}}));
+        System.out.println(journeyToMoon(4, new int[][]{{0, 2}}));
     }
 
     private static int journeyToMoon(int n, int[][] astronaut) {
+        Set<Integer> namedAstronautSet = new HashSet<>();
+
+        for (int[] pair : astronaut)
+            for (int a : pair)
+                namedAstronautSet.add(a);
+
+        List<Integer> namedAstronautList = new ArrayList<>(namedAstronautSet);
+
         Set<Pair> pairs = new HashSet<>();
-        for (int i = 0; i < astronaut.length - 1; i++) {
-            Pair pair1 = new Pair();
-            pair1.first = astronaut[i][0];
-            pair1.second = astronaut[i + 1][0];
-            pairs.add(pair1);
 
-            Pair pair2 = new Pair();
-            pair2.first = astronaut[i][0];
-            pair2.second = astronaut[i + 1][1];
-            pairs.add(pair2);
-
-            Pair pair3 = new Pair();
-            pair3.first = astronaut[i][1];
-            pair3.second = astronaut[i + 1][0];
-            pairs.add(pair3);
-
-            Pair pair4 = new Pair();
-            pair4.first = astronaut[i][1];
-            pair4.second = astronaut[i + 1][1];
-            pairs.add(pair4);
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                Pair pair = new Pair();
+                if (namedAstronautList.size() > i)
+                    pair.first = namedAstronautList.get(i);
+                if (namedAstronautList.size() > j)
+                    pair.second = namedAstronautList.get(j);
+                pairs.add(pair);
+            }
         }
+
+        for (int[] pair : astronaut) {
+            Pair countryPair = new Pair();
+            countryPair.first = pair[0];
+            countryPair.second = pair[1];
+            pairs.remove(countryPair);
+
+            for (int[] otherPair : astronaut) {
+                if (otherPair[0] == pair[0] && otherPair[1] == pair[1])
+                    continue;
+
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (pair[i] == otherPair[j]) {
+                            Pair sameCountryPair = new Pair();
+                            sameCountryPair.first = pair[i == 0 ? 1 : 0];
+                            sameCountryPair.second = otherPair[j == 0 ? 1 : 0];
+                            pairs.remove(sameCountryPair);
+                        }
+                    }
+                }
+            }
+        }
+
         return pairs.size();
     }
 }
 
 class Pair {
 
-    int first, second;
+    Integer first, second;
 
     @Override
     public int hashCode() {
-        return first + second;
+        return (first != null ? first : 0) + (second != null ? second : 0);
     }
 
     @Override
@@ -55,7 +80,9 @@ class Pair {
 
         Pair pair = (Pair) obj;
 
-        return (first == pair.first && second == pair.second)
-                || (second == pair.first && first == pair.second);
+        return first != null && second != null && pair.first != null && pair.second != null
+                && ((first.equals(pair.first) && second.equals(pair.second))
+                || (second.equals(pair.first) && first.equals(pair.second)));
+
     }
 }
