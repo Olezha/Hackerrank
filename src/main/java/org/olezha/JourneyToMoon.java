@@ -16,9 +16,10 @@ public class JourneyToMoon {
     private static int journeyToMoon(int n, int[][] astronaut) {
         Set<Integer> namedAstronautSet = new HashSet<>();
 
-        for (int[] pair : astronaut)
-            for (int a : pair)
-                namedAstronautSet.add(a);
+        for (int[] pair : astronaut) {
+            namedAstronautSet.add(pair[0]);
+            namedAstronautSet.add(pair[1]);
+        }
 
         List<Integer> namedAstronautList = new ArrayList<>(namedAstronautSet);
 
