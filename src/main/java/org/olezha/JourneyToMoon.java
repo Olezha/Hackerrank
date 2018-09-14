@@ -5,14 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/*
- * https://www.hackerrank.com/challenges/journey-to-the-moon
- */
+//www.hackerrank.com/challenges/journey-to-the-moon
 public class JourneyToMoon {
 
     public static void main(String[] args) {
-        System.out.println(journeyToMoon(5, new int[][]{{0, 1}, {2, 3}, {0, 4}}));
-        System.out.println(journeyToMoon(4, new int[][]{{0, 2}}));
+        System.out.println(journeyToMoon(5, new int[][]{{0, 1}, {2, 3}, {0, 4}}) == 6);
+        System.out.println(journeyToMoon(4, new int[][]{{0, 2}}) == 5);
     }
 
     private static int journeyToMoon(int n, int[][] astronaut) {
@@ -47,15 +45,16 @@ public class JourneyToMoon {
                 if (otherPair[0] == pair[0] && otherPair[1] == pair[1])
                     continue;
 
-                for (int i = 0; i < 2; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (pair[i] == otherPair[j]) {
-                            Pair sameCountryPair = new Pair();
-                            sameCountryPair.first = pair[i == 0 ? 1 : 0];
-                            sameCountryPair.second = otherPair[j == 0 ? 1 : 0];
-                            pairs.remove(sameCountryPair);
-                        }
+                for (int i = 0, j = 0; i < 2;) {
+                    if (pair[i] == otherPair[j]) {
+                        Pair sameCountryPair = new Pair();
+                        sameCountryPair.first = pair[i == 0 ? 1 : 0];
+                        sameCountryPair.second = otherPair[j == 0 ? 1 : 0];
+                        pairs.remove(sameCountryPair);
                     }
+
+                    i += j;
+                    j = j == 0 ? 1 : 0;
                 }
             }
         }
